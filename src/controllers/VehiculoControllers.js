@@ -37,6 +37,20 @@ class VehiculoController {
             }
         });
     }
+    update(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const vehiculoDaoMongodb = new VehiculoDaoMongodb();
+            const rta = yield vehiculoDaoMongodb.update(req.params.patente);
+            if (rta) {
+                res.status(200).send(rta);
+            }
+            else {
+                res.status(500).send({
+                    message: "No pudo ser cambiado el estado del vehiculo" + req.params.patente,
+                });
+            }
+        });
+    }
     // tratar de hacer bajas logicas
     delete(req, res) {
         return __awaiter(this, void 0, void 0, function* () {

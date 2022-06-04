@@ -26,6 +26,19 @@ class VehiculoController {
     }
   }
 
+  async update(req: express.Request, res: express.Response) {
+    const vehiculoDaoMongodb: VehiculoDaoMongodb = new VehiculoDaoMongodb();
+    const rta = await vehiculoDaoMongodb.update(req.params.patente);
+    if (rta) {
+      res.status(200).send(rta);
+    } else {
+      res.status(500).send({
+        message:
+          "No pudo ser cambiado el estado del vehiculo" + req.params.patente,
+      });
+    }
+  }
+
   // tratar de hacer bajas logicas
   async delete(req: express.Request, res: express.Response) {
     const vehiculoDaoMongodb: VehiculoDaoMongodb = new VehiculoDaoMongodb();

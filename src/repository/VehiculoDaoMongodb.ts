@@ -63,9 +63,20 @@ class VehiculoDaoMongodb implements Dao<Vehiculo, string> {
     return Promise.resolve(rta);
   }
 
-  async update(element: Partial<Vehiculo>): Promise<boolean> {
+  async update(clave: string): Promise<boolean> {
     const db = await this.conectarMongodb.conectar();
     const collection = db.collection("vehiculos");
+
+    const filter = { patente: clave };
+    const updateDocument = {
+      $set: {
+        horaDeEgreso: new Date(Date.now()),
+        isParked: false,
+      },
+    };
+    const result = await collection.updateOne(filter, updateDocument);
+
+    return Promise.resolve(result.acknowledged);
   }
 }
 

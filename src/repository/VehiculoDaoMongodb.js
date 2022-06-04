@@ -65,10 +65,19 @@ class VehiculoDaoMongodb {
             return Promise.resolve(rta);
         });
     }
-    update(element) {
+    update(clave) {
         return __awaiter(this, void 0, void 0, function* () {
             const db = yield this.conectarMongodb.conectar();
             const collection = db.collection("vehiculos");
+            const filter = { patente: clave };
+            const updateDocument = {
+                $set: {
+                    horaDeEgreso: new Date(Date.now()),
+                    isParked: false,
+                },
+            };
+            const result = yield collection.updateOne(filter, updateDocument);
+            return Promise.resolve(result.acknowledged);
         });
     }
 }

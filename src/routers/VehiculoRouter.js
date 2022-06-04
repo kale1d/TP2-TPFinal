@@ -1,4 +1,4 @@
-import VehiculoController from '../controllers/VehiculoControllers.js';
+import VehiculoController from "../controllers/VehiculoControllers.js";
 class VehiculoRouter {
     constructor(app, nombre) {
         this.app = app;
@@ -6,12 +6,15 @@ class VehiculoRouter {
         this.configurarRutas();
     }
     configurarRutas() {
-        this.app.route(this.nombre)
+        this.app
+            .route(this.nombre)
             .get(VehiculoController.getAll)
             .post(VehiculoController.add);
-        this.app.route(this.nombre + "/:patente")
+        this.app
+            .route(this.nombre + "/:patente")
             .get(VehiculoController.get)
-            .delete(VehiculoController.delete);
+            .delete(VehiculoController.delete)
+            .put(VehiculoController.update);
         return this.app;
     }
 }
