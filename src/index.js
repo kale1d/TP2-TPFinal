@@ -4,12 +4,14 @@ import bodyParser from "body-parser";
 import ClienteRouter from "./routers/ClienteRouter.js";
 import VehiculoRouter from "./routers/VehiculoRouter.js";
 import PrecioRouter from "./routers/PrecioRouter.js";
+import CalcularMonto from "./routers/CalcularMontoRouter.js";
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 new ClienteRouter(app, "/api/clientes");
 new VehiculoRouter(app, "/api/vehiculos");
 new PrecioRouter(app, "/api/precios");
+new CalcularMonto(app, "/api/calcular-monto");
 const port = 3000;
 app.listen(port, () => {
     console.log(`Ejemplo escuchando en ${port}`);

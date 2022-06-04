@@ -70,7 +70,7 @@ class VehiculoDaoMongodb implements Dao<Vehiculo, string> {
     const filter = { patente: clave };
     const updateDocument = {
       $set: {
-        horaDeEgreso: new Date(Date.now()),
+        horaDeEgreso: Date.now(),
         isParked: false,
       },
     };
