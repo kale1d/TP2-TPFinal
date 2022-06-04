@@ -1,7 +1,10 @@
 class Vehiculo {
-    constructor(patente, color) {
+    constructor(patente, tipoDeVehiculo, isParked, horaDeIngreso, horaDeEgreso) {
         this.patente = patente;
-        this.color = color;
+        this.tipoDeVehiculo = tipoDeVehiculo;
+        this.isParked = isParked;
+        this.horaDeIngreso = horaDeIngreso;
+        this.horaDeEgreso = horaDeEgreso;
     }
 }
 export default Vehiculo;

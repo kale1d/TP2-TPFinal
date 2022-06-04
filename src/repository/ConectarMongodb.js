@@ -7,17 +7,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { MongoClient } from 'mongodb';
+import { MongoClient } from "mongodb";
 class ConectarMongodb {
     constructor() {
-        this.url = 'mongodb://127.0.0.1:27017';
+        this.url = "mongodb://127.0.0.1:27017";
         this.client = new MongoClient(this.url);
-        this.dbName = 'sistema';
+        this.dbName = "sistema";
     }
     conectar() {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.client.connect();
-            console.log('Conectado a base de datos ' + this.dbName);
+            console.log("Conectado a base de datos " + this.dbName);
             const db = this.client.db(this.dbName);
             return db;
         });
@@ -25,7 +25,7 @@ class ConectarMongodb {
     desconectar() {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.client.close();
-            console.log('Desconectado de la base de datos ' + this.dbName);
+            console.log("Desconectado de la base de datos " + this.dbName);
         });
     }
 }

@@ -7,16 +7,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import Vehiculo from "../modelo/Vehiculo.js";
 import { ConectarMongodb } from "./ConectarMongodb.js";
-class VehiculoDaoMongodb {
+import Precio from "../modelo/Precio.js";
+class PrecioDaoMongoDb {
     constructor() {
         this.conectarMongodb = new ConectarMongodb();
     }
     add(element) {
         return __awaiter(this, void 0, void 0, function* () {
             const db = yield this.conectarMongodb.conectar();
-            const collection = db.collection("vehiculos");
+            const collection = db.collection("precios");
+            console.log(collection);
+            console.log({ element });
             yield collection.insertOne(element);
             yield this.conectarMongodb.desconectar();
             return Promise.resolve(element);
@@ -24,38 +26,38 @@ class VehiculoDaoMongodb {
     }
     getAll() {
         return __awaiter(this, void 0, void 0, function* () {
-            const vehiculos = [];
+            const precios = [];
             const db = yield this.conectarMongodb.conectar();
-            const collection = db.collection("vehiculos");
+            const collection = db.collection("precios");
             const findResult = yield collection.find({}).toArray();
-            findResult.forEach((e) => vehiculos.push(new Vehiculo(e.patente, e.tipoDeVehiculo, e.isParked, e.horaDeIngreso, e.horaDeEgreso)));
+            console.log(findResult);
+            findResult.forEach((e) => precios.push(new Precio(e.valor, e.tipoDeVehiculo)));
             yield this.conectarMongodb.desconectar();
-            return Promise.resolve(vehiculos);
+            return Promise.resolve(precios);
         });
     }
     // si no encuentra un vehiculo, devuelve un objeto vacio
     get(clave) {
         return __awaiter(this, void 0, void 0, function* () {
             const db = yield this.conectarMongodb.conectar();
-            const collection = db.collection("vehiculos");
-            const findResult = yield collection.findOne({ patente: clave });
+            const collection = db.collection("precios");
+            const findResult = yield collection.findOne({ tipoDeVehiculo: clave });
             yield this.conectarMongodb.desconectar();
-            const vehiculo = new Vehiculo("", null, false, null, null);
+            const precio = new Precio(0, null);
             if (findResult !== null) {
-                vehiculo.patente = findResult.patente;
-                vehiculo.tipoDeVehiculo = findResult.tipoDeVehiculo;
-                vehiculo.isParked = findResult.isParked;
-                vehiculo.horaDeIngreso = findResult.horaDeIngreso;
-                vehiculo.horaDeEgreso = findResult.horaDeEgreso;
+                precio.tipoDeVehiculo = findResult.tipoDeVehiculo;
+                precio.valor = findResult.valor;
             }
-            return Promise.resolve(vehiculo);
+            return Promise.resolve(precio);
         });
     }
     delete(element) {
         return __awaiter(this, void 0, void 0, function* () {
             const db = yield this.conectarMongodb.conectar();
-            const collection = db.collection("vehiculos");
-            const findResult = yield collection.deleteOne({ patente: element.patente });
+            const collection = db.collection("precios");
+            const findResult = yield collection.deleteOne({
+                tipoDeVehiculo: element.tipoDeVehiculo,
+            });
             yield this.conectarMongodb.desconectar();
             let rta = false;
             if (findResult.deletedCount > 0) {
@@ -65,11 +67,5 @@ class VehiculoDaoMongodb {
             return Promise.resolve(rta);
         });
     }
-    update(element) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const db = yield this.conectarMongodb.conectar();
-            const collection = db.collection("vehiculos");
-        });
-    }
 }
-export { VehiculoDaoMongodb };
+export { PrecioDaoMongoDb };

@@ -7,44 +7,29 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { VehiculoDaoMongodb } from "../repository/VehiculoDaoMongodb.js";
-class VehiculoController {
+import { PrecioDaoMongoDb } from "../repository/PrecioDaoMongoDb.js";
+class PrecioController {
     getAll(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const vehiculoDaoMongodb = new VehiculoDaoMongodb();
-            res.status(200).send(yield vehiculoDaoMongodb.getAll());
+            const precioDaoMongoDb = new PrecioDaoMongoDb();
+            res.status(200).send(yield precioDaoMongoDb.getAll());
         });
     }
     add(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const vehiculoDaoMongodb = new VehiculoDaoMongodb();
-            res.status(200).send(yield vehiculoDaoMongodb.add(req.body));
+            console.log(req.body);
+            const precioDaoMongoDb = new PrecioDaoMongoDb();
+            res.status(200).send(yield precioDaoMongoDb.add(req.body));
         });
     }
     get(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("hola");
-            const vehiculoDaoMongodb = new VehiculoDaoMongodb();
-            const rta = yield vehiculoDaoMongodb.get(req.params.patente);
+            const precioDaoMongoDb = new PrecioDaoMongoDb();
+            const rta = yield precioDaoMongoDb.get(req.params.tipoDeVehiculo);
             console.log(req.params);
-            if (rta.patente != "") {
+            if (rta.tipoDeVehiculo != null) {
                 res.status(200).send(rta);
-            }
-            else {
-                res.status(404).send({
-                    mensaje: "no se encuentran registros para " + req.params.patente,
-                });
-            }
-        });
-    }
-    // tratar de hacer bajas logicas
-    delete(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const vehiculoDaoMongodb = new VehiculoDaoMongodb();
-            if (yield vehiculoDaoMongodb.delete({ patente: req.params.patente })) {
-                res.status(201).send({
-                    mensaje: "Registro eliminado para patente: " + req.params.patente,
-                });
             }
             else {
                 res.status(500).send({
@@ -54,4 +39,4 @@ class VehiculoController {
         });
     }
 }
-export default new VehiculoController();
+export default new PrecioController();
