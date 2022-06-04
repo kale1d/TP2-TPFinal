@@ -10,9 +10,12 @@ class CalcularMontoController {
       const precioMongoDb: PrecioDaoMongoDb = new PrecioDaoMongoDb();
       const precio = await precioMongoDb.get(vehiculo.tipoDeVehiculo!);
       const diff =
-        new Date(vehiculo.horaDeEgreso!).getHours() -
-        new Date(vehiculo.horaDeIngreso!).getHours();
-      console.log(diff);
+        new Date(vehiculo.horaDeEgreso!).valueOf() -
+        new Date(vehiculo.horaDeIngreso!).valueOf();
+      const diffInHours = diff / 1000 / 60 / 60;
+      const montoAAbonar = precio.valor * diffInHours;
+
+      res.status(200).send("El monto a abonar es" + montoAAbonar);
     }
   }
 }

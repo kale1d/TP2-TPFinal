@@ -72,7 +72,7 @@ class VehiculoDaoMongodb {
             const filter = { patente: clave };
             const updateDocument = {
                 $set: {
-                    horaDeEgreso: Date.now(),
+                    horaDeEgreso: new Date(Date.now()).valueOf(),
                     isParked: false,
                 },
             };
