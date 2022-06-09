@@ -21,7 +21,7 @@ class CalcularMontoController {
                     new Date(vehiculo.horaDeIngreso).valueOf();
                 const diffInHours = diff / 1000 / 60 / 60;
                 const montoAAbonar = precio.valor * diffInHours;
-                res.status(200).send("El monto a abonar es" + montoAAbonar);
+                res.status(200).send({ monto: montoAAbonar, patente: vehiculo.patente });
             }
         });
     }
