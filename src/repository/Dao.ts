@@ -1,13 +1,11 @@
-interface Dao<E,K> {
+interface Dao<E, K> {
+  add: (Element: E) => Promise<E>;
 
-    add: (Element : E) => Promise<E>;
+  getAll: () => Promise<Array<E>>;
 
-    getAll: () => Promise<Array<E>>;
+  get: (Clave: K) => Promise<E>;
 
-    get: (Clave : K) => Promise<E>;
-
-    delete: (Element : E) => Promise<boolean>;
-
+  delete?: (Element: E) => Promise<boolean>;
 }
 
 export default Dao;

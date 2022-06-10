@@ -1,5 +1,6 @@
 import express from "express";
 import { PrecioDaoMongoDb } from "../repository/PrecioDaoMongoDb.js";
+import { RegistroDaoMongoDb } from "../repository/RegistroDaoMongoDb.js";
 import { VehiculoDaoMongodb } from "../repository/VehiculoDaoMongodb.js";
 
 class CalcularMontoController {
@@ -14,8 +15,11 @@ class CalcularMontoController {
         new Date(vehiculo.horaDeIngreso!).valueOf();
       const diffInHours = diff / 1000 / 60 / 60;
       const montoAAbonar = precio.valor * diffInHours;
-
-      res.status(200).send({ monto: montoAAbonar, patente: vehiculo.patente });
+      const obj = { monto: montoAAbonar, patente: vehiculo.patente };
+      const registroMongoDb: RegistroDaoMongoDb = new RegistroDaoMongoDb();
+      const registro = await registroMongoDb.add(obj);
+      console.log(registro);
+      res.status(200).send(obj);
     }
   }
 }

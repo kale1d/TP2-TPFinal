@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { PrecioDaoMongoDb } from "../repository/PrecioDaoMongoDb.js";
+import { RegistroDaoMongoDb } from "../repository/RegistroDaoMongoDb.js";
 import { VehiculoDaoMongodb } from "../repository/VehiculoDaoMongodb.js";
 class CalcularMontoController {
     getMonto(req, res) {
@@ -21,7 +22,11 @@ class CalcularMontoController {
                     new Date(vehiculo.horaDeIngreso).valueOf();
                 const diffInHours = diff / 1000 / 60 / 60;
                 const montoAAbonar = precio.valor * diffInHours;
-                res.status(200).send({ monto: montoAAbonar, patente: vehiculo.patente });
+                const obj = { monto: montoAAbonar, patente: vehiculo.patente };
+                const registroMongoDb = new RegistroDaoMongoDb();
+                const registro = yield registroMongoDb.add(obj);
+                console.log(registro);
+                res.status(200).send(obj);
             }
         });
     }
