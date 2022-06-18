@@ -15,7 +15,11 @@ class CalcularMontoController {
         new Date(vehiculo.horaDeIngreso!).valueOf();
       const diffInHours = diff / 1000 / 60 / 60;
       const montoAAbonar = precio.valor * diffInHours;
-      const obj = { monto: montoAAbonar, patente: vehiculo.patente };
+      const obj = {
+        monto: montoAAbonar,
+        patente: vehiculo.patente,
+        fecha: vehiculo.horaDeIngreso,
+      };
       const registroMongoDb: RegistroDaoMongoDb = new RegistroDaoMongoDb();
       const registro = await registroMongoDb.add(obj);
       console.log(registro);

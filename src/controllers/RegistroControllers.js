@@ -22,7 +22,6 @@ class RegistroController {
     }
     add(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(req.body);
             const registroDaoMongoDb = new RegistroDaoMongoDb();
             res.status(200).send(yield registroDaoMongoDb.add(req.body));
         });
