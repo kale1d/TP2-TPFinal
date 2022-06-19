@@ -17,8 +17,7 @@ class RegistroDaoMongoDb {
         return __awaiter(this, void 0, void 0, function* () {
             const db = yield this.conectarMongodb.conectar();
             const collection = db.collection("registros");
-            console.log(collection);
-            console.log({ element });
+            console.log({ element }, "aca");
             yield collection.insertOne(element);
             yield this.conectarMongodb.desconectar();
             return Promise.resolve(element);
@@ -30,7 +29,8 @@ class RegistroDaoMongoDb {
             const db = yield this.conectarMongodb.conectar();
             const collection = db.collection("registros");
             const findResult = yield collection.find({}).toArray();
-            findResult.forEach((e) => registros.push(new Registro(e.monto, e.patente)));
+            findResult.forEach((e) => registros.push(new Registro(e.monto, e.patente, e.fecha)));
+            console.log({ registros });
             yield this.conectarMongodb.desconectar();
             return Promise.resolve(registros);
         });
@@ -41,10 +41,11 @@ class RegistroDaoMongoDb {
             const collection = db.collection("registro");
             const findResult = yield collection.findOne({ patente: clave });
             yield this.conectarMongodb.desconectar();
-            const registro = new Registro(0, "");
+            const registro = new Registro(0, "", null);
             if (findResult !== null) {
                 registro.monto = findResult.monto;
                 registro.patente = findResult.patente;
+                registro.fecha = findResult.fecha;
             }
             return Promise.resolve(registro);
         });

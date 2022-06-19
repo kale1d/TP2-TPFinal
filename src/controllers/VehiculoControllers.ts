@@ -28,14 +28,20 @@ class VehiculoController {
 
   async update(req: express.Request, res: express.Response) {
     const vehiculoDaoMongodb: VehiculoDaoMongodb = new VehiculoDaoMongodb();
-    const rta = await vehiculoDaoMongodb.update(req.params.patente);
-    if (rta) {
-      res.status(200).send(rta);
+    const findVehiculo = await vehiculoDaoMongodb.get(req.params.patente);
+    if (findVehiculo.patente === "") {
+      res.status(500).send({ message: "Vehiculo no encontrado" });
     } else {
-      res.status(500).send({
-        message:
-          "No pudo ser cambiado el estado del vehiculo" + req.params.patente,
-      });
+      const rta = await vehiculoDaoMongodb.update(req.params.patente);
+      console.log(rta);
+      if (rta) {
+        res.status(200).send(rta);
+      } else {
+        res.status(500).send({
+          message:
+            "No pudo ser cambiado el estado del vehiculo" + req.params.patente,
+        });
+      }
     }
   }
 

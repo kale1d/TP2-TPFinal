@@ -16,9 +16,6 @@ class RegistroRouter {
       .post(RegistroController.add);
 
     this.app
-      .route(this.nombre + "buscarPatente/:patente")
-      .get(RegistroController.get);
-    this.app
       .route(this.nombre + "/generarInforme")
       .get(RegistroController.generarInforme);
 

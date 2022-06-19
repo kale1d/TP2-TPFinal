@@ -13,7 +13,6 @@ class RegistroController {
   }
 
   async add(req: express.Request, res: express.Response) {
-    console.log(req.body);
     const registroDaoMongoDb: RegistroDaoMongoDb = new RegistroDaoMongoDb();
     res.status(200).send(await registroDaoMongoDb.add(req.body));
   }

@@ -14,7 +14,6 @@ class PrecioController {
   }
 
   async get(req: express.Request, res: express.Response) {
-    console.log("hola");
     const precioDaoMongoDb: PrecioDaoMongoDb = new PrecioDaoMongoDb();
     const rta = await precioDaoMongoDb.get(req.params.tipoDeVehiculo);
     console.log(req.params);
@@ -26,24 +25,6 @@ class PrecioController {
       });
     }
   }
-
-  // tratar de hacer bajas logicas
-  //   async delete(req: express.Request, res: express.Response) {
-  //     const precioDaoMongoDb: PrecioDaoMongoDb = new PrecioDaoMongoDb();
-  //     if (
-  //       await precioDaoMongoDb.delete({
-  //         tipoDeVehiculo: req.params.tipoDeVehiculo,
-  //       })
-  //     ) {
-  //       res.status(201).send({
-  //         mensaje: "Registro eliminado para patente: " + req.params.patente,
-  //       });
-  //     } else {
-  //       res.status(500).send({
-  //         mensaje: "no se encuentran registros para " + req.params.patente,
-  //       });
-  //     }
-  //   }
 }
 
 export default new PrecioController();
