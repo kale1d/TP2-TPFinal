@@ -12,9 +12,16 @@ class CalcularMontoController {
       const precio = await precioMongoDb.get(vehiculo.tipoDeVehiculo!);
       const diff =
         new Date(vehiculo.horaDeEgreso!).valueOf() -
-        new Date(vehiculo.horaDeIngreso!).valueOf();
+        new Date(vehiculo.horaDeIngreso!).valueOf(); 
       const diffInHours = diff / 1000 / 60 / 60;
       const montoAAbonar = precio.valor * diffInHours;
+      // En caso de querer hacerlo bien, se comenta la linea 17 y se descomenta la de abajo
+      // let montoAAbonar;
+      // if (diffInHours <= 1){
+      //   montoAAbonar = precio.valor;
+      // }else{
+      //   montoAAbonar = precio.valor * diffInHours;
+      // }
       const obj = {
         monto: montoAAbonar,
         patente: vehiculo.patente,

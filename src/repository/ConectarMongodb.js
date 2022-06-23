@@ -17,7 +17,7 @@ class ConectarMongodb {
     conectar() {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.client.connect();
-            console.log("Conectado a base de datos " + this.dbName);
+            console.log("Conectado a base de datos: " + this.dbName);
             const db = this.client.db(this.dbName);
             return db;
         });
@@ -25,7 +25,7 @@ class ConectarMongodb {
     desconectar() {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.client.close();
-            console.log("Desconectado de la base de datos " + this.dbName);
+            console.log("Desconectado de la base de datos: " + this.dbName);
         });
     }
 }
